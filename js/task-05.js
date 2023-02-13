@@ -5,8 +5,11 @@ const output = document.querySelector('#name-output');
 input.addEventListener('input', onInput);
 
 function onInput(event) {
-  if (!event.currentTarget.value) {
+  const trimmedInputVal = event.currentTarget.value.trim()
+  
+  if (!trimmedInputVal) {
     output.textContent = DEFAULT_OUTPUT_VAL;
+    
     return;
   }
 
