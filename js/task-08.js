@@ -7,7 +7,7 @@ function onLoginFormSubmit(e) {
 
   const { email, password } = e.currentTarget.elements;
 
-  if (!email.value.trim()) {
+  if (!email.value.trim() ) {
     alert('Email required!');
 
     return;
@@ -18,11 +18,12 @@ function onLoginFormSubmit(e) {
     return;
   }
 
-  const formData = new FormData(e.currentTarget);
+  const formData = {
+    email: email.value,
+    password: password.value
+  };
 
-  formData.forEach((value, key) => {
-    console.log(`${key}: ${value}`);
-  });
+    console.log(formData);
 
   e.currentTarget.reset();
 }
