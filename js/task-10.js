@@ -1,41 +1,55 @@
-const controlsWrapp = document.getElementById('controls');
-const boxesWrapp = document.getElementById('boxes');
-const inputContaty = document.querySelector('input[type=number]');
+const createBtnEl = document.querySelector('[data-create]');
+const destroyBtnEl = document.querySelector('[data-destroy]');
+const boxesWrapEl = document.getElementById('boxes');
+const bubbleWrapEl = document.querySelector('.bubble-wrap');
+const inputContatyEl = document.querySelector('input[type=number]');
+const minContaty = Number(inputContatyEl.min);
+const maxContaty = Number(inputContatyEl.max);
 
-controlsWrapp.addEventListener('click', e => {
-  if (e.target.hasAttribute('data-create')) {
-    createBoxes(inputContaty.value);
+createBtnEl.addEventListener('click', onCreateBtnClick);
+destroyBtnEl.addEventListener('click', onDestroyBtnClick);
 
-    inputContaty.value = '';
+function onCreateBtnClick() {
+  if (inputContatyEl.value < minContaty || inputContatyEl.value > maxContaty) {
+    notify();
 
     return;
   }
 
-  if (e.target.hasAttribute('data-destroy')) {
-    destroyBoxes(boxesWrapp);
-  }
-});
+  createBoxes(inputContatyEl.value);
+  clearInputValue(inputContatyEl);
+}
 
 function createBoxes(amount) {
-  const boxes = [];
+  let boxesMarkup = '';
 
   for (let i = 1; i <= amount; i += 1) {
-    const box = document.createElement('div');
-    box.style = `width:${20 + i * 10}px;height:${20 + i * 10}px`;
-    box.style.backgroundColor = getRandomHexColor();
+    const boxSize = 20 + i * 10;
+    const randomColor = getRandomHexColor();
+    const box = `<div style="width:${boxSize}px;height:${boxSize}px;background-color:${randomColor}"></div>`;
 
-    boxes.push(box);
+    boxesMarkup += box;
   }
 
-  appendBoxes(boxesWrapp, boxes);
+  boxesWrapEl.innerHTML = boxesMarkup;
 }
 
-function destroyBoxes(selector) {
-  selector.innerHTML = '';
+function onDestroyBtnClick() {
+  boxesWrapEl.innerHTML = '';
 }
 
-function appendBoxes(elem, boxes = []) {
-  elem.append(...boxes);
+function notify() {
+  bubbleWrapEl.classList.add('visible');
+
+  const id = setTimeout(() => {
+    bubbleWrapEl.classList.remove('visible');
+
+    clearTimeout(id);
+  }, 1350);
+}
+
+function clearInputValue(element) {
+  element.value = '';
 }
 
 function getRandomHexColor() {
