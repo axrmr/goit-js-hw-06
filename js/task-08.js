@@ -18,11 +18,12 @@ function onLoginFormSubmit(e) {
     return;
   }
 
-  const formData = new FormData(e.currentTarget);
+  const formData = {
+    email: email.value,
+    password: password.value,
+  };
 
-  formData.forEach((value, key) => {
-    console.log(`${key}: ${value}`);
-  });
+  console.log(formData);
 
   e.currentTarget.reset();
 }
