@@ -7,12 +7,12 @@ function onLoginFormSubmit(e) {
 
   const { email, password } = e.currentTarget.elements;
 
-  if (!email.value.trim()) {
+  if (!email.value.trim() ) {
     alert('Email required!');
 
     return;
   }
-  if (!password.value) {
+  if (!password.value.trim() ) {
     alert('Password required!');
 
     return;
